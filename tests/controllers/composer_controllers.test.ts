@@ -177,3 +177,45 @@ test.serial('SUCCESS, updateComposer', async (t: any): Promise<void> => {
             t.deepEqual(response, expected);
         });
 });
+
+test.serial('SUCCESS, deleteComposer', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const composerController = new ComposerController(composerService);
+    
+    const composer = {
+        id: 1,
+        name: 'bagas',
+        created_at: '',
+        updated_at: '',
+        deleted_at: ''
+    };
+
+    const expected = {
+        data: composer
+    };
+
+    const mockService = t.context.sandbox.mock(composerService).expects('deleteComposer').resolves(true);
+    const data: RequestData = {
+        query: {},
+        params: {id: 1},
+        body: {},
+        files: {}
+    };
+
+    const context: Context = {
+        request_id: "1",
+        user_id: 1,
+        email: "bagas@go-jek.com",
+        name: "bagasys",
+        phone_number: "081259591600"
+    };
+    
+    await composerController.deleteComposer(data, context)
+        .then(response => {
+            t.true(mockService.called);
+            t.deepEqual(response, {
+                data: {id: 1}
+            });
+        });
+});

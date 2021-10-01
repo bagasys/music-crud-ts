@@ -42,10 +42,21 @@ export default class ComposerController extends BaseController {
         };
     }
 
+    public async deleteComposer(data: RequestData, context: Context): Promise<any> {
+        const id: number = data.params.id;
+        await this.composerService.deleteComposer(id);
+        return {
+            data: {
+                id: id
+            }
+        }        
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/', this.getAllComposers.bind(this));
         this.addRoute('post', '/', this.createComposer.bind(this), {validate: SCHEME.CREATE_COMPOSER});
         this.addRoute('get', '/:id', this.getComposerById.bind(this));
         this.addRoute('put', '/:id', this.updateComposer.bind(this), {validate: SCHEME.UPDATE_COMPOSER});
+        this.addRoute('delete', '/:id', this.deleteComposer.bind(this));
     }
 }
