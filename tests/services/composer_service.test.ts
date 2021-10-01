@@ -63,3 +63,22 @@ test.serial('SUCCESS, getAllComposers', async (t: any): Promise<void> => {
             t.deepEqual(response, [composer]);
         });
 });
+
+test.serial('SUCCESS, createComposer', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const composer = {
+        id: 1,
+        name: 'bagas',
+        created_at: '',
+        updated_at: '',
+        deleted_at: ''
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('create').resolves(composer);
+    await composerService.createComposer({name: "bagas"})
+        .then(response => {
+            t.true(mockRepository.called);
+            t.is(response, composer);
+        });
+});

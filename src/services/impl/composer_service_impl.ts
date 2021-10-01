@@ -22,6 +22,10 @@ export class ComposerServiceImpl extends Service implements ComposerService {
     public async getAllComposers(): Promise<Composer[]> {
         return this.composerRepository.findAll({}, {});
     }
+
+    public async createComposer(data: Partial<Composer>): Promise<Composer> {
+        return await this.composerRepository.create(data);
+    }
 }
 
 export default ComposerServiceImpl;
