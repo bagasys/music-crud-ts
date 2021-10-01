@@ -33,7 +33,16 @@ export class ComposerServiceImpl extends Service implements ComposerService {
             throw new HttpError.NotFoundError('composer not found', 'COMPOSER_NOT_FOUND');
         }
         await this.composerRepository.update({ id }, composerData);
-        return { id }
+        return { id };
+    }
+
+    public async deleteComposer(id: number): Promise<boolean> {
+        const composer = await this.composerRepository.findById(id);
+        if (!composer) {
+            throw new HttpError.NotFoundError('composer not found', 'COMPOSER_NOT_FOUND');
+        }
+        const affectedRows = await this.composerRepository.delete({id});
+        return affectedRows == 1;
     }
 }
 

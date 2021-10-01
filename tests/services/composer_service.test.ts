@@ -115,3 +115,36 @@ test.serial('FAIL, updateComposer composer not found', async (t: any): Promise<v
         t.true(error instanceof HttpError.NotFoundError);
     }
 });
+
+test.serial('SUCCESS, deleteComposer', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const data = {
+        id: 1
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('delete').resolves(1);
+    const mockRepository2 = t.context.sandbox.mock(composerRepository).expects('findById').resolves({id: 1, name: "bagas"});
+    await composerService.deleteComposer(1)
+        .then(response => {
+            t.true(mockRepository.called);
+            t.is(response, true);
+        });
+});
+
+test.serial('FAIL, deleteComposer case composer not found', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const data = {
+        id: 1
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('delete').resolves(1);
+    const mockRepository2 = t.context.sandbox.mock(composerRepository).expects('findById').resolves(null);
+    
+    try {
+        await composerService.deleteComposer(1);
+    } catch (error) {
+        t.true(error instanceof HttpError.NotFoundError);
+    }
+});

@@ -6,6 +6,7 @@ export interface ComposerService extends Service {
     getAllComposers(): Promise<Composer[]>;
     createComposer(data: Partial<Composer>): Promise<Composer>;
     updateComposer(id: number, composerData: Partial<Composer>): Promise<Partial<Composer>>;
+    deleteComposer(id: number): Promise<boolean>;
 }
 
 export default ComposerService;
