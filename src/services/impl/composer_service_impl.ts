@@ -26,6 +26,15 @@ export class ComposerServiceImpl extends Service implements ComposerService {
     public async createComposer(data: Partial<Composer>): Promise<Composer> {
         return await this.composerRepository.create(data);
     }
+
+    public async updateComposer(id: number, composerData: Partial<Composer>): Promise<Partial<Composer>> {
+        const composer = await this.composerRepository.findById(id);
+        if (!composer) {
+            throw new HttpError.NotFoundError('composer not found', 'COMPOSER_NOT_FOUND');
+        }
+        await this.composerRepository.update({ id }, composerData);
+        return { id }
+    }
 }
 
 export default ComposerServiceImpl;

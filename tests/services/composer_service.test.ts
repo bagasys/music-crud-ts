@@ -82,3 +82,36 @@ test.serial('SUCCESS, createComposer', async (t: any): Promise<void> => {
             t.is(response, composer);
         });
 });
+
+test.serial('SUCCESS, updateComposer', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const data = {
+        id: 1
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('update').resolves(data);
+    const mockRepository2 = t.context.sandbox.mock(composerRepository).expects('findById').resolves({id: 1, name: "bagas"});
+    await composerService.updateComposer(1, {name: "bagas"})
+        .then(response => {
+            t.true(mockRepository.called);
+            t.deepEqual(response, data);
+        });
+});
+
+test.serial('FAIL, updateComposer composer not found', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const data = {
+        id: 1
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('update').resolves(data);
+    const mockRepository2 = t.context.sandbox.mock(composerRepository).expects('findById').resolves(null);
+    try {
+        await composerService.updateComposer(1, {name: "bagas"});
+    } catch (error) {
+        t.true(mockRepository2.called);
+        t.true(error instanceof HttpError.NotFoundError);
+    }
+});
