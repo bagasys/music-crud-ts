@@ -1,6 +1,10 @@
 import { App as BaseApp, SQLContext } from 'rey-common';
+import ComposerRepositoryImpl from './repositories/impl/composer_repository_impl';
+import ComposerServiceImpl from './services/impl/composer_service_impl';
+import ComposerController from './controllers/composer_controller';
 
 class App extends BaseApp {
+    
     public constructor(port: number) {
         super(port, false, true);
     }
@@ -13,7 +17,9 @@ class App extends BaseApp {
     }
 
     public async initControllers(): Promise<void> {
-        
+        const composerService = new ComposerServiceImpl(new ComposerRepositoryImpl);
+
+        this.addController(new ComposerController(composerService));
     }
 }
 
