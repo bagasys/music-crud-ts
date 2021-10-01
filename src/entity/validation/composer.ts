@@ -6,5 +6,14 @@ export const SCHEME: IObject<Joi.ObjectSchema> = {
         body: Joi.object({
             name: Joi.string().required()
         })
+    }),
+
+    UPDATE_COMPOSER: Joi.object({
+        body: Joi.object({
+            name: Joi.string().required()
+        }),
+        params: Joi.object({
+            id: Joi.number().required()
+        })
     })
 };
