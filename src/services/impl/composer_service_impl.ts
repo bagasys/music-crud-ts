@@ -18,6 +18,10 @@ export class ComposerServiceImpl extends Service implements ComposerService {
         }
         return composer;
     }
+
+    public async getAllComposers(): Promise<Composer[]> {
+        return this.composerRepository.findAll({}, {});
+    }
 }
 
 export default ComposerServiceImpl;

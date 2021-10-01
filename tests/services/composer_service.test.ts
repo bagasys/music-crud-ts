@@ -44,3 +44,22 @@ test.serial('FAIL, getComposerById case composer not found', async (t: any): Pro
         t.true(error instanceof HttpError.NotFoundError);
     }
 });
+
+test.serial('SUCCESS, getAllComposers', async (t: any): Promise<void> => {
+    const composerRepository = new ComposerRepository;
+    const composerService = new ComposerService(composerRepository);
+    const composer = {
+        id: 1,
+        name: 'bagas',
+        created_at: '',
+        updated_at: '',
+        deleted_at: ''
+    };
+
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findAll').resolves([composer]);
+    await composerService.getAllComposers()
+        .then(response => {
+            t.true(mockRepository.called);
+            t.deepEqual(response, [composer]);
+        });
+});
