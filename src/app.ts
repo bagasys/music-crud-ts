@@ -2,6 +2,9 @@ import { App as BaseApp, SQLContext } from 'rey-common';
 import ComposerRepositoryImpl from './repositories/impl/composer_repository_impl';
 import ComposerServiceImpl from './services/impl/composer_service_impl';
 import ComposerController from './controllers/composer_controller';
+import MusicRepositoryImpl from './repositories/impl/music_repository_impl';
+import MusicServiceImpl from './services/impl/music_service_impl';
+import MusicController from './controllers/music_controller';
 
 class App extends BaseApp {
     
@@ -18,8 +21,11 @@ class App extends BaseApp {
 
     public async initControllers(): Promise<void> {
         const composerService = new ComposerServiceImpl(new ComposerRepositoryImpl);
+        const musicService = new MusicServiceImpl(new MusicRepositoryImpl);
+
 
         this.addController(new ComposerController(composerService));
+        this.addController(new MusicController(musicService));
     }
 }
 
