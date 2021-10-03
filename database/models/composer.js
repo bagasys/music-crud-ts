@@ -39,7 +39,9 @@ Composer.init({
 });
 
 Composer.associate = (models) => {
-    Composer.hasOne(models.Music); 
+    Composer.hasOne(models.Music, {
+        foreignKey: 'composer_id'
+    }); 
 };
 
 module.exports = Composer;

@@ -12,14 +12,6 @@ Music.init({
         allowNull: false,
         primaryKey: true
     },
-    composer_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Composer,
-            key: 'id',
-        }
-    },
     title: {
         type: DataTypes.STRING(255),
         allowNull: false
@@ -49,9 +41,7 @@ Music.init({
 
 Music.associate = (models) => {
     Music.belongsTo(models.Composer, {
-        foreignKey: {
-            name: 'composer_id'
-        }
+        foreignKey: 'composer_id'
     });
 };
 
