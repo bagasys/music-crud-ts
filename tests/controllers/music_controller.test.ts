@@ -136,3 +136,40 @@ test.serial('SUCCESS, createMusic', async (t: any): Promise<void> => {
     } catch (error) {
     }
 });
+
+test.serial('SUCCESS, updateMusic', async (t: any): Promise<void> => {
+    const musicRepository = new MusicRepository;
+    const musicService = new MusicService(musicRepository);
+    const musicController = new MusicController(musicService);
+    
+    const music = {
+        id: 1,
+    };
+
+    const expected = {
+        data: music
+    };
+
+    const mockService = t.context.sandbox.mock(musicService).expects('updateMusic').resolves(music);
+    const data: RequestData = {
+        query: {},
+        params: {composer_id: 1, title: 'stand by me'},
+        body: {},
+        files: {}
+    };
+
+    const context: Context = {
+        request_id: "1",
+        user_id: 1,
+        email: "bagas@go-jek.com",
+        name: "bagasys",
+        phone_number: "081259591600"
+    };
+    
+    try {
+        const music = await musicController.updateMusic(data, context)
+        t.true(mockService.called);
+        t.deepEqual(expected ,music);
+    } catch (error) {
+    }
+});

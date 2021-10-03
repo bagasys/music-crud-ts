@@ -34,9 +34,19 @@ export default class MusicController extends BaseController {
         };
     }
 
+    public async updateMusic(data: RequestData, context: Context): Promise<any> {
+        const musicData: Partial<Music> = {title: data.body.title as string, composer_id: data.body.composer_id};
+        const id: number = data.params.id;
+        const music = await this.musicService.updateMusic(id, musicData);
+        return {
+            data: music
+        };
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/', this.getAllMusics.bind(this));
         this.addRoute('post', '/', this.createMusic.bind(this), {validate: SCHEME.CREATE_MUSIC});
         this.addRoute('get', '/:id', this.getMusicById.bind(this));
+        this.addRoute('put', '/:id', this.updateMusic.bind(this), {validate: SCHEME.UPDATE_MUSIC});
     }
 }

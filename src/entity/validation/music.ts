@@ -9,4 +9,15 @@ export const SCHEME: IObject<Joi.ObjectSchema> = {
         })
     }),
 
+    UPDATE_MUSIC: Joi.object({
+        body: Joi.object({
+            title: Joi.string(),
+            composer_id: Joi.number()
+        }),
+        params: Joi.object({
+            id: Joi.number()
+        }),
+
+    }),
+
 };
