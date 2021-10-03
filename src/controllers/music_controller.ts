@@ -43,10 +43,21 @@ export default class MusicController extends BaseController {
         };
     }
 
+    public async deleteMusic(data: RequestData, context: Context): Promise<any> {
+        const id: number = data.params.id;
+        await this.musicService.deleteMusic(id);
+        return {
+            data: {
+                id: id
+            }
+        }        
+    }
+
     public setRoutes(): void {
         this.addRoute('get', '/', this.getAllMusics.bind(this));
         this.addRoute('post', '/', this.createMusic.bind(this), {validate: SCHEME.CREATE_MUSIC});
         this.addRoute('get', '/:id', this.getMusicById.bind(this));
         this.addRoute('put', '/:id', this.updateMusic.bind(this), {validate: SCHEME.UPDATE_MUSIC});
+        this.addRoute('delete', '/:id', this.deleteMusic.bind(this));
     }
 }
