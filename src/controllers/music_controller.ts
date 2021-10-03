@@ -1,6 +1,8 @@
 import { Controller as BaseController, RequestData, Context } from 'rey-common';
 import { API_ROUTE } from '../entity/constant/api';
 import MusicService from 'src/services/music_service';
+import { Music } from 'src/entity/models/music';
+import { SCHEME } from '../entity/validation/music';
 
 export default class MusicController extends BaseController {
     
@@ -11,13 +13,30 @@ export default class MusicController extends BaseController {
     }
 
     public async getAllMusics(data: RequestData, context: Context): Promise<any> {
-        const composers = await this.musicService.getAllMusics();
+        const musics = await this.musicService.getAllMusics();
         return {
-            data: composers
+            data: musics
+        };
+    }
+
+    public async getMusicById(data: RequestData, context: Context): Promise<any> {
+        const music = await this.musicService.getMusicById(data.params.id);
+        return {
+            data: music
+        };
+    }
+
+    public async createMusic(data: RequestData, context: Context): Promise<any> {
+        const musicData: Partial<Music> = {title: data.body.title as string, composer_id: data.body.composer_id};
+        const music = await this.musicService.createMusic(musicData);
+        return {
+            data: music
         };
     }
 
     public setRoutes(): void {
         this.addRoute('get', '/', this.getAllMusics.bind(this));
+        this.addRoute('post', '/', this.createMusic.bind(this), {validate: SCHEME.CREATE_MUSIC});
+        this.addRoute('get', '/:id', this.getMusicById.bind(this));
     }
 }
