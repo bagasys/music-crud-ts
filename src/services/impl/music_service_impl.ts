@@ -12,7 +12,7 @@ export class MusicServiceImpl extends Service implements MusicService {
     }
 
     public async getMusicById(id: number): Promise<Music> {
-        const music = await this.musicRepository.findById(id);
+        const music = await this.musicRepository.findByIdWithItem(id);
         if (!music) {
             throw new HttpError.NotFoundError('music not found', 'MUSIC_NOT_FOUND');
         }
@@ -20,7 +20,7 @@ export class MusicServiceImpl extends Service implements MusicService {
     }
 
     public async getAllMusics(): Promise<Music[]> {
-        return this.musicRepository.findAll({}, {});
+        return this.musicRepository.findAllWithItem();
     }
 
     public async createMusic(data: Partial<Music>): Promise<Music> {

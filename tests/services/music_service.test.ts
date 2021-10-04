@@ -23,7 +23,7 @@ test.serial('SUCCESS, getMusicById case music found', async (t: any): Promise<vo
         deleted_at: ''
     };
 
-    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findById').resolves(music);
+    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findByIdWithItem').resolves(music);
     await musicService.getMusicById(1)
         .then(response => {
             t.true(mockRepository.called);
@@ -43,7 +43,7 @@ test.serial('FAIL, getMusicById case music not found', async (t: any): Promise<v
         deleted_at: ''
     };
 
-    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findById').resolves(null);
+    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findByIdWithItem').resolves(null);
     try {
         await musicService.getMusicById(1);
     } catch (error) {
@@ -63,7 +63,7 @@ test.serial('SUCCESS, getAllMusics', async (t: any): Promise<void> => {
         deleted_at: ''
     };
 
-    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findAll').resolves([music]);
+    const mockRepository = t.context.sandbox.mock(musicRepository).expects('findAllWithItem').resolves([music]);
     await musicService.getAllMusics()
         .then(response => {
             t.true(mockRepository.called);
