@@ -23,7 +23,7 @@ test.serial('SUCCESS, getComposerById case composer found', async (t: any): Prom
         deleted_at: ''
     };
 
-    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findOne').resolves(composer);
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findByIdWithItem').resolves(composer);
     await composerService.getComposerById(1)
         .then(response => {
             t.true(mockRepository.called);
@@ -35,7 +35,7 @@ test.serial('FAIL, getComposerById case composer not found', async (t: any): Pro
     const composerRepository = new ComposerRepository;
     const composerService = new ComposerService(composerRepository);
 
-    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findOne').resolves(null);
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findByIdWithItem').resolves(null);
     
     try {
         await composerService.getComposerById(1);
@@ -56,7 +56,7 @@ test.serial('SUCCESS, getAllComposers', async (t: any): Promise<void> => {
         deleted_at: ''
     };
 
-    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findAll').resolves([composer]);
+    const mockRepository = t.context.sandbox.mock(composerRepository).expects('findAllWithItem').resolves([composer]);
     await composerService.getAllComposers()
         .then(response => {
             t.true(mockRepository.called);

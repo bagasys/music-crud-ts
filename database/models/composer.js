@@ -39,7 +39,7 @@ Composer.init({
 });
 
 Composer.associate = (models) => {
-    Composer.hasOne(models.Music, {
+    Composer.hasMany(models.Music, {
         foreignKey: 'composer_id'
     }); 
 };

@@ -12,7 +12,7 @@ export class ComposerServiceImpl extends Service implements ComposerService {
     }
 
     public async getComposerById(id: number): Promise<Composer> {
-        const composer = await this.composerRepository.findOne({ id });
+        const composer = await this.composerRepository.findByIdWithItem(id);
         if (!composer) {
             throw new HttpError.NotFoundError('composer not found', 'COMPOSER_NOT_FOUND');
         }
@@ -20,7 +20,7 @@ export class ComposerServiceImpl extends Service implements ComposerService {
     }
 
     public async getAllComposers(): Promise<Composer[]> {
-        return this.composerRepository.findAll({}, {});
+        return this.composerRepository.findAllWithItem();
     }
 
     public async createComposer(data: Partial<Composer>): Promise<Composer> {
