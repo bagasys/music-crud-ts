@@ -10,7 +10,7 @@ export class ComposerRepositoryImpl extends SQLRepository<Composer> implements C
     public async findAllWithItem(): Promise<any> {
         const db = this.getInstance();
         const res = await db.model[this.modelName].findAll({
-            include: 'Music'
+            include: 'musics'
         });
         return res;
     }
@@ -19,7 +19,7 @@ export class ComposerRepositoryImpl extends SQLRepository<Composer> implements C
         const db = this.getInstance();
         const res = await db.model[this.modelName].findOne({
             where: { id },
-            include: 'Music'
+            include: 'musics'
         });
         return res;
     }

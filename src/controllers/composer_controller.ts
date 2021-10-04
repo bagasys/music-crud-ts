@@ -4,7 +4,7 @@ import ComposerService from 'src/services/composer_service';
 import { SCHEME } from '../entity/validation/composer';
 import { Composer } from 'src/entity/models/composer';
 export default class ComposerController extends BaseController {
-    
+
     public constructor(
         private composerService: ComposerService
     ) {
@@ -49,7 +49,7 @@ export default class ComposerController extends BaseController {
             data: {
                 id: id
             }
-        }        
+        };
     }
 
     public setRoutes(): void {

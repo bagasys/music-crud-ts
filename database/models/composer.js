@@ -2,7 +2,7 @@ const { SQLContext } = require('rey-common');
 
 const { Model, DataTypes } = SQLContext.getORMProvider();
 
-class Composer extends Model {}
+class Composer extends Model { }
 
 Composer.init({
     id: {
@@ -40,8 +40,9 @@ Composer.init({
 
 Composer.associate = (models) => {
     Composer.hasMany(models.Music, {
-        foreignKey: 'composer_id'
-    }); 
+        foreignKey: 'composer_id',
+        as: 'musics'
+    });
 };
 
 module.exports = Composer;

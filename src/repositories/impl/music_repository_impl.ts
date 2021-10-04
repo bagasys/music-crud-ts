@@ -1,6 +1,6 @@
-import { SQLRepository } from "rey-common";
-import { Music } from "src/entity/models/music";
-import MusicRepository from "../music_repository";
+import { SQLRepository } from 'rey-common';
+import { Music } from 'src/entity/models/music';
+import MusicRepository from '../music_repository';
 
 export class MusicRepositoryImpl extends SQLRepository<Music> implements MusicRepository {
     constructor() {
@@ -10,7 +10,7 @@ export class MusicRepositoryImpl extends SQLRepository<Music> implements MusicRe
     public async findAllWithItem(): Promise<any> {
         const db = this.getInstance();
         const res = await db.model[this.modelName].findAll({
-            include: 'Composer'
+            include: 'composer'
         });
         return res;
     }
@@ -19,7 +19,7 @@ export class MusicRepositoryImpl extends SQLRepository<Music> implements MusicRe
         const db = this.getInstance();
         const res = await db.model[this.modelName].findOne({
             where: { id },
-            include: 'Composer'
+            include: 'composer'
         });
         return res;
     }

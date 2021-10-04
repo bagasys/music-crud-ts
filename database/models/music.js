@@ -41,7 +41,8 @@ Music.init({
 
 Music.associate = (models) => {
     Music.belongsTo(models.Composer, {
-        foreignKey: 'composer_id'
+        foreignKey: 'composer_id',
+        as: 'composer'
     });
 };
 
